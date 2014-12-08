@@ -30,7 +30,7 @@ with open('GRC13292545_Ycap_rmdup_raw_v1.ann2.head1K.vcf','r') as filein, open(f
                 break
         
             nextline_li=nextline.strip().split('\t')
-            fileout.write(str(i)+'\t'+'1'+'\t'+'.\t'+'chrY\t'+li[1]+nextline_li[1]+'\n')
+            fileout.write(str(i)+'\t'+'1\t'+'.\t'+'chrY\t'+li[1]+'\t'+nextline_li[1]+'\t'+'.\t'+li[3]+'\n')
             
             #control_byone_li.append(li[1])
             #control_byone_li.append(nextline_li[1])
@@ -41,11 +41,13 @@ with open('GRC13292545_Ycap_rmdup_raw_v1.ann2.head1K.vcf','r') as filein, open(f
             
         
             
-            if li[6]=='PASS':
+            #if li[6]=='PASS':
+                #fileout.write(li[8]
+            #else
              #  print 'eurraaa'
               #print(int(nextline_li[1])-int(li[1]))
-              print(linenr)
-              print(line)
+                  #print(linenr)
+                  #print(line)
               # break
     
             #if i==50:
