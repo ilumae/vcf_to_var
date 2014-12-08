@@ -12,14 +12,13 @@ def pairwise(iterable):
     return zip_longest(a, b)
 i=0
 linenr=0
-<<<<<<< HEAD
 control_byone_li=[0]
 curr_line=" "
 prev_line=" "
 filein=open('GRC13292545_Ycap_rmdup_raw_v1.ann2.head1K.vcf','r') 
-=======
+
 control_byone_li=[]
->>>>>>> pairwise_nextline
+
 
 with open(filein.name[:-4]+'.var', 'a') as fileout:
     fileout.write('#FILE_ID\t'+filein.name[:-4]+'\n')
@@ -27,19 +26,18 @@ with open(filein.name[:-4]+'.var', 'a') as fileout:
     fileout.write('#GENERATED_BY_customscript\tvcf_to_cg.py\n')
     fileout.write('.\n')
     fileout.write('>locus\tploidy\tallele\tchromosome\tbegin\tend\tvarType\treference\talleleSeq\tvarScoreVAF\tvarScoreEAF\tvarQuality\thapLink\txRef\n')
-<<<<<<< HEAD
+
     while (prev_line !=""):
         curr_line=filein.readline()
-=======
+
     for line, nextline in pairwise(filein):
         linenr+=1
->>>>>>> pairwise_nextline
-        
+
         if curr_line[:1]!='#':
             continue#or line[:1]!='#':
         else:
             i=i+1
-<<<<<<< HEAD
+
             prev_line=curr_line
             curr_line=filein.readline()
             prev_li=prev_line.strip().split('\t')
@@ -49,7 +47,7 @@ with open(filein.name[:-4]+'.var', 'a') as fileout:
             control_byone_li.append(li[1])
             control_byone_li.append(nextline_li[1])
             previous=filein[linenr-1]
-=======
+
             li=line.strip().split('\t')
             if nextline==None:
                 break
@@ -62,8 +60,7 @@ with open(filein.name[:-4]+'.var', 'a') as fileout:
             if (int(nextline_li[1])-int(li[1])==1) and li[4]!='.':
                 fileout.write('snp\t'+li[3]+'\t'+li[4]+'\n')
                  
->>>>>>> pairwise_nextline
-            
+
             #control_byone_li.append(li[1])
             #control_byone_li.append(nextline_li[1])
             
