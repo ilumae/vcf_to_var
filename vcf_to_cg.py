@@ -30,7 +30,13 @@ with open('GRC13292545_Ycap_rmdup_raw_v1.ann2.head1K.vcf','r') as filein, open(f
                 break
         
             nextline_li=nextline.strip().split('\t')
-            fileout.write(str(i)+'\t'+'1\t'+'.\t'+'chrY\t'+li[1]+'\t'+nextline_li[1]+'\t'+'.\t'+li[3]+'\n')
+            fileout.write(str(i)+'\t'+'1\t'+'.\t'+'chrY\t'+li[1]+'\t'+nextline_li[1]+'\t')
+
+            if (int(nextline_li[1])-int(li[1])==1) and li[4]=='.':
+                 fileout.write('ref'+'\n')
+            if (int(nextline_li[1])-int(li[1])==1) and li[4]!='.':
+                fileout.write('snp\t'+li[3]+'\t'+li[4]+'\n')
+                 
             
             #control_byone_li.append(li[1])
             #control_byone_li.append(nextline_li[1])
