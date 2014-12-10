@@ -18,24 +18,43 @@ with open('GRC13292545_Ycap_rmdup_raw_v1.ann2.head1K.vcf','r') as filein, open(f
     fileout.write('#FILE_ID\t'+filein.name[:-4]+'\n')
     fileout.write('#GENOME_REFERENCE\tNCBI build 37\n')
     fileout.write('#GENERATED_BY_customscript\tvcf_to_cg.py\n')
+    fileout.write('#ALL INDELS to ins')
     fileout.write('.\n')
     fileout.write('>locus\tploidy\tallele\tchromosome\tbegin\tend\tvarType\treference\talleleSeq\tvarScoreVAF\tvarScoreEAF\tvarQuality\thapLink\txRef\n')
     for line, nextline in pairwise(filein):
+        if line==None:
+            break
         linenr+=1
         
-        if line[:1]!='#': #or line[:1]!='#':
+        if line[:1]!='#':
             i=i+1
             li=line.strip().split('\t')
-            if nextline==None:
+            if nextline==None:#misjuhtub faili l6puskontrollida??
                 break
-        
+
             nextline_li=nextline.strip().split('\t')
             fileout.write(str(i)+'\t'+'1\t'+'.\t'+'chrY\t'+li[1]+'\t'+nextline_li[1]+'\t')
 
-            if (int(nextline_li[1])-int(li[1])==1) and li[4]=='.':
-                 fileout.write('ref'+'\n')
+            if (int(nextline_li[1])-int(li[1])==1) and li[4]=='.':#continue until something not ref is met
+                 if li[7].strip().split(';')[0]=='INDEL':
+                     fileout.write('ins'+'\n')
+                 else:
+                     fileout.write('ref'+'\n')
             if (int(nextline_li[1])-int(li[1])==1) and li[4]!='.':
-                fileout.write('snp\t'+li[3]+'\t'+li[4]+'\n')
+                 fileout.write('snp\t'+li[3]+'\t'+li[4]+'\n')
+            if  (int(nextline_li[1])-int(li[1])==0):
+                 if li[7].strip().split(';')[0]=='INDEL':
+                     fileout.write('ins'+'\n')
+                 if li[4]!='.':
+                     fileout.write('snp'+'\n')
+                 if li[4]=='.':
+                     fileout.write('ref'+'\n')
+                      
+            if (int(nextline_li[1])-int(li[1])>1):
+                     fileout.write('no-call'+'\n')
+                    
+            
+                
                  
             
             #control_byone_li.append(li[1])
