@@ -2,8 +2,7 @@ from itertools import tee, zip_longest
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
-
-This is made in python 2.7
+This is made in python 3.3
 """
 def writqual(lis,filename):
     if li[6]=='REJECTED':
@@ -17,7 +16,20 @@ def writqual(lis,filename):
         return 
             
 def vartype(lis, filename):
-
+    if len(li[3])>len(li[4]):
+        filename.write('del\t'+li[3]+'\t'+li[4]+'\t')
+        return
+    elif len(li[3])<len(li[4]):
+        filename.write('ins\t'+li[3]+'\t'+li[4]+'\t')
+        return
+    elif len(li[3])==len(li[4]) and len(li[3])!=1 and len(li[4])!=1:
+        filename.write('sub\t'+li[3]+'\t'+li[4]+'\t')
+        return
+    elif len(li[3])==1 and len(li[4])==1:
+        filename.write('snp\t'+li[3]+'\t'+li[4]+'\t')
+        return
+        
+    
 
 
     
@@ -39,7 +51,7 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
     fileout.write('.\n')
     fileout.write('>locus\tploidy\tallele\tchromosome\tbegin\tend\tvarType\treference\talleleSeq\tvarScoreVAF\tvarScoreEAF\tvarQuality\thapLink\txRef\n')
     for line, nextline in pairwise(filein):
-        if line=None:
+        if line==None:
             break
         linenr+=1
             
@@ -50,7 +62,6 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
 #                break
             li=line.strip().split('\t')
             #nextline_li=nextline.strip().split('\t')
-            #diff=int(nextline_li[1])-int(li[1])
 
             if firstline==True:
                 fileout.write('1\t'+'1\t'+'1\t'+'chrY\t'+'0\t'+str(int(li[1])-1)+'\t'+'no-call\t'+'=\t'+'?\n')
@@ -84,7 +95,8 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
                         
                         
                     else:
-                        fileout.write('snp\t'+li[3]+'\t'+li[4]+'\t')
+                        vartype(li, fileout)
+                        #fileout.write('snp\t'+li[3]+'\t'+li[4]+'\t')
                         writqual(li, fileout)
                         temp=[li[1]]
                         continue
@@ -98,7 +110,8 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
 
 
                     else:
-                        fileout.write('snp\t'+li[3]+'\t'+li[4]+'\t')
+                        vartype(li, fileout)
+                        #fileout.write('snp\t'+li[3]+'\t'+li[4]+'\t')
                         writqual(li, fileout)
                         temp=[li[1]]
                         continue
@@ -107,27 +120,6 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
                 #                fileout.write('APPI_0\n')
 
 
-
-
-
-
-                #control_byone_li.append(li[1])
-                #control_byone_li.append(nextline_li[1])
-
-                #print('*******'+li[1])
-                #print(control_byone_li[-1])
-                #print('!!!'+ str(int(control_byone_li[-1])-int(li[1])))
-
-
-
-                #if li[6]=='PASS':
-                #fileout.write(li[8]
-                #else
-                #  print 'eurraaa'
-                #print(int(nextline_li[1])-int(li[1]))
-                #print(linenr)
-                #print(line)
-                # break
 
                 #if i==50:
 #                print(control_byone_li)
