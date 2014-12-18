@@ -6,10 +6,10 @@ This is made in python 3.3
 """
 def writqual(lis,filename):
     if li[6]=='REJECTED':
-        filename.write('1\t'+'1\n')
+        filename.write('1\t'+'1'+'\t'*10+'\n')
         return 
     elif li[6]=='PASS':
-        filename.write('100\t'+'100\n')
+        filename.write('100\t'+'100'+'\t'*10+'\n')
         return
     else:
         filename.write('CHECKCHEKCHECK\n')
@@ -49,7 +49,7 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
     fileout.write('#GENERATED_BY_customscript\tvcf_to_cg.py\n')
     fileout.write('#ALL INDELS to ins')
     fileout.write('.\n')
-    fileout.write('>locus\tploidy\tallele\tchromosome\tbegin\tend\tvarType\treference\talleleSeq\tvarScoreVAF\tvarScoreEAF\tvarQuality\thapLink\txRef\n')
+    fileout.write('>locus\tploidy\tallele\tchromosome\tbegin\tend\tvarType\treference\talleleSeq\tvarScoreVAF\tvarScoreEAF\tvarFilter\thapLink\txRef\talleleFreq\talternativeCalls\n')
     for line, nextline in pairwise(filein):
         if line==None:
             break
@@ -64,7 +64,7 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
             #nextline_li=nextline.strip().split('\t')
 
             if firstline==True:
-                fileout.write('1\t'+'1\t'+'1\t'+'chrY\t'+'0\t'+str(int(li[1])-1)+'\t'+'no-call\t'+'=\t'+'?\n')
+                fileout.write('1\t'+'1\t'+'1\t'+'chrY\t'+'0\t'+str(int(li[1])-1)+'\t'+'no-call\t'+'='+'\t'+'?'+'\t'*14+'\n')
                 fileout.write('2\t'+'1\t'+'1\t'+'chrY\t'+str(int(li[1])-1)+'\t'+str(int(li[1]))+'\t')
                 if li[4]=='.':
                     fileout.write('ref\t'+'=\t'+'=\t')
@@ -84,7 +84,7 @@ with open('GRC14392020_customer_variants.LF_moskva.vcf','r') as filein, open(fil
             else:
                 diff=int(li[1])-int(temp[0])
                 if diff>1:
-                    fileout.write(str(i)+'\t'+'1\t'+'1\t'+'chrY\t'+str(temp[0])+'\t'+str(int(li[1])-1)+'\t'+'no-call\t'+'=\t'+'?\n')
+                    fileout.write(str(i)+'\t'+'1\t'+'1\t'+'chrY\t'+str(temp[0])+'\t'+str(int(li[1])-1)+'\t'+'no-call\t'+'=\t'+'?'+'\t'*14+'\n')
                     i=i+1
                     fileout.write(str(i)+'\t'+'1\t'+'1\t'+'chrY\t'+str(int(li[1])-1)+'\t'+str(li[1])+'\t')
                     if li[4]=='.':
